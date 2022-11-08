@@ -20,7 +20,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           body: |
-            Release of RType: ${{ github.ref }}
+            Release of KapProfiler: ${{ github.ref }}
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           draft: false
