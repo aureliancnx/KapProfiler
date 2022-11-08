@@ -23,12 +23,6 @@ set(raylib_VERSION 4.0.0)
 find_package(raylib REQUIRED)
 message(STATUS "RayLib version: ${raylib_VERSION}")
 
-set(ZLIB_USE_STATIC_LIBS ON)
-find_package(ZLIB REQUIRED)
-
-set(Boost_USE_STATIC_LIBS ON)
-find_package(Boost REQUIRED COMPONENTS iostreams)
-
 set(IMGUI_USE_STATIC_LIBS ON)
 find_package(imgui REQUIRED)
 
@@ -41,10 +35,8 @@ add_executable(KapProfiler ${SOURCES} ${HEADERS})
 
 include_directories(${Boost_INCLUDE_DIRS})
 target_link_libraries(KapProfiler raylib)
-target_link_libraries(KapProfiler Boost::iostreams)
 target_link_libraries(KapProfiler glfw)
 
-target_link_libraries(KapProfiler ZLIB::ZLIB)
 target_link_libraries(KapProfiler imgui::imgui)
 
 # Includes
