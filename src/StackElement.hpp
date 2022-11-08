@@ -10,35 +10,28 @@ namespace KapEngine {
 
         class StackElement {
 
-        private:
+          private:
             std::string raw;
             std::string method;
             std::string clazz;
 
-            void parseMethodName(std::string &);
-            void parseClassName(std::string &);
+            void parseMethodName(std::string&);
+            void parseClassName(std::string&);
 
-        public:
-            StackElement(std::string &);
+          public:
+            StackElement(std::string&);
             ~StackElement();
 
             size_t hashCode() const;
 
-            [[nodiscard]] std::string getMethod() const {
-                return method;
-            }
+            [[nodiscard]] std::string getMethod() const { return method; }
 
-            [[nodiscard]] std::string getClass() const {
-                return clazz;
-            }
+            [[nodiscard]] std::string getClass() const { return clazz; }
 
-            [[nodiscard]] std::string toString() const {
-                return raw;
-            }
-
+            [[nodiscard]] std::string toString() const { return raw; }
         };
 
-    }
-}
+    } // namespace Profiler
+} // namespace KapEngine
 
-#endif //RTYPE_STACKELEMENT_HPP
+#endif // RTYPE_STACKELEMENT_HPP
