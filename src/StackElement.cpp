@@ -1,12 +1,12 @@
 #include "StackElement.hpp"
 
-KapEngine::Profiler::StackElement::StackElement(std::string &_raw) {
+KapEngine::Profiler::StackElement::StackElement(std::string& _raw) {
     this->raw = _raw;
     parseMethodName(_raw);
     parseClassName(_raw);
 }
 
-void KapEngine::Profiler::StackElement::parseMethodName(std::string &r) {
+void KapEngine::Profiler::StackElement::parseMethodName(std::string& r) {
     size_t parenthesis_last = r.find_last_of("(");
 
     if (parenthesis_last == -1) {
@@ -25,7 +25,7 @@ void KapEngine::Profiler::StackElement::parseMethodName(std::string &r) {
     }
 }
 
-void KapEngine::Profiler::StackElement::parseClassName(std::string &r) {
+void KapEngine::Profiler::StackElement::parseClassName(std::string& r) {
     size_t colons = r.find("::");
 
     if (colons == std::string::npos) {
@@ -38,10 +38,6 @@ void KapEngine::Profiler::StackElement::parseClassName(std::string &r) {
     }
 }
 
-KapEngine::Profiler::StackElement::~StackElement() {
+KapEngine::Profiler::StackElement::~StackElement() {}
 
-}
-
-size_t KapEngine::Profiler::StackElement::hashCode() const {
-    return std::hash<std::string>()(this->raw);
-}
+size_t KapEngine::Profiler::StackElement::hashCode() const { return std::hash<std::string>()(this->raw); }
