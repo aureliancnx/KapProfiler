@@ -1,23 +1,20 @@
 #include <glob.h>
-#include "imgui.h"
-#include "imgui_impl_glfw.hpp"
-#include "imgui_impl_opengl2.hpp"
-#include "StackSummary.hpp"
 #include <stdio.h>
 #include <vector>
 #include <functional>
-#include <filesystem>
-#include <chrono>
-#include <sstream>
 #include <iostream>
-#include "StackElement.hpp"
-#include <fstream>
 #include <string>
-#include <stdio.h>
+
 #ifdef __APPLE__
 #define GL_SILENCE_DEPRECATION
 #endif
 #include <GLFW/glfw3.h>
+
+#include "imgui.h"
+#include "imgui_impl_glfw.hpp"
+#include "imgui_impl_opengl2.hpp"
+#include "StackSummary.hpp"
+#include "StackElement.hpp"
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
 #pragma comment(lib, "legacy_stdio_definitions")
