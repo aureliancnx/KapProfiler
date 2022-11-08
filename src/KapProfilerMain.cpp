@@ -28,27 +28,21 @@ static void glfw_error_callback(int error, const char* description) { fprintf(st
 std::vector<std::string> glob(const std::string& pattern) {
     using namespace std;
 
-    // glob struct resides on the stack
     glob_t glob_result;
     memset(&glob_result, 0, sizeof(glob_result));
     vector<string> filenames;
 
-    // do the glob operation
     int return_value = glob(pattern.c_str(), GLOB_TILDE, NULL, &glob_result);
     if (return_value != 0) {
         globfree(&glob_result);
         return filenames;
     }
 
-    // collect all the filenames into a std::list<std::string>
     for (size_t i = 0; i < glob_result.gl_pathc; ++i) {
         filenames.push_back(string(glob_result.gl_pathv[i]));
     }
 
-    // cleanup
     globfree(&glob_result);
-
-    // done
     return filenames;
 }
 
@@ -68,8 +62,6 @@ std::vector<std::string> split(std::string s, std::string delimiter) {
 }
 
 int main(int ac, char** av) {
-
-    // Setup window
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit())
         return 1;
@@ -77,43 +69,28 @@ int main(int ac, char** av) {
     if (window == NULL)
         return 1;
     glfwMakeContextCurrent(window);
-    glfwSwapInterval(1); // Enable vsync
+    glfwSwapInterval(1);
 
-    // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO();
     (void)io;
-    // io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    // io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 
-    // Setup Dear ImGui style
     ImGui::StyleColorsDark();
-    // ImGui::StyleColorsLight();
 
-    // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL2_Init();
 
-    // Our state
-    bool show_demo_window = true;
-    bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-    // Main loop
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
 
-        // Start the Dear ImGui frame
         ImGui_ImplOpenGL2_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about
-        // Dear ImGui!).
-
         std::vector<std::string> kprofFiles = glob("../../*.kprof");
-        char checkChar;
         for (std::string& kprofFileName : kprofFiles) {
             std::ifstream file(kprofFileName);
 
@@ -174,24 +151,15 @@ int main(int ac, char** av) {
 
             std::sort(summaries.begin(), summaries.end(), std::greater<>());
             ImGui::Begin(("Thread #" + kprofFileName).c_str());
-
-            std::filesystem::file_time_type ftime = std::filesystem::last_write_time(kprofFileName);
-            const auto systemTime = std::chrono::file_clock::to_time_t(ftime);
-            long long now = std::chrono::high_resolution_clock::now().time_since_epoch().count();
-            long long diff = (now - systemTime) / (long long)1000000000;
-
-            ImGui::Text("Last updated: %lld s", diff);
             if (ImGui::Button("Reset")) {
                 remove(kprofFileName.c_str());
             }
             static ImGuiTableFlags flags = ImGuiTableFlags_RowBg | ImGuiTableFlags_BordersOuter | ImGuiTableFlags_BordersV |
                                            ImGuiTableFlags_Resizable | ImGuiTableFlags_Hideable | ImGuiTableFlags_Sortable;
 
-            // When using ScrollX or ScrollY we need to specify a size for our table container!
-            // Otherwise by default the table will fit all available space, like a BeginChild() call.
             ImVec2 outer_size = ImVec2(0.0f, ImGui::GetTextLineHeightWithSpacing() * 8);
             if (ImGui::BeginTable("thread_table", 7, flags, outer_size)) {
-                ImGui::TableSetupScrollFreeze(0, 1); // Make top row always visible
+                ImGui::TableSetupScrollFreeze(0, 1);
                 ImGui::TableSetupColumn("Class", ImGuiTableColumnFlags_None);
                 ImGui::TableSetupColumn("Method", ImGuiTableColumnFlags_None);
                 ImGui::TableSetupColumn("Calls", ImGuiTableColumnFlags_None);
@@ -201,7 +169,6 @@ int main(int ac, char** av) {
                 ImGui::TableSetupColumn("Time %", ImGuiTableColumnFlags_None);
                 ImGui::TableHeadersRow();
 
-                // Demonstrate using clipper for large vertical lists
                 for (auto& summary : summaries) {
                     KapEngine::Profiler::StackElement elem(summary.getRaw());
                     ImGui::TableNextRow();
@@ -226,7 +193,6 @@ int main(int ac, char** av) {
             ImGui::End();
         }
 
-        // Rendering
         ImGui::Render();
         int display_w, display_h;
         glfwGetFramebufferSize(window, &display_w, &display_h);
@@ -234,19 +200,10 @@ int main(int ac, char** av) {
         glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // If you are using this code with non-legacy OpenGL header/contexts (which you should not, prefer using imgui_impl_opengl3.cpp!!),
-        // you may need to backup/reset/restore other state, e.g. for current shader using the commented lines below.
-        // GLint last_program;
-        // glGetIntegerv(GL_CURRENT_PROGRAM, &last_program);
-        // glUseProgram(0);
         ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
-        // glUseProgram(last_program);
-
         glfwMakeContextCurrent(window);
         glfwSwapBuffers(window);
     }
-
-    // Cleanup
     ImGui_ImplOpenGL2_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
