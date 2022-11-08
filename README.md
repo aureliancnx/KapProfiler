@@ -15,7 +15,7 @@ Get **[KapEngine](https://github.com/benji-35/KapEngine/)**, download the last r
 of **[KapProfiler](https://github.com/aureliancnx/KapProfiler/releases/)**, extract this in the **Packages** folder of your
 KapProfier game and let's go!
 
-Build the executable with **[CMake](https://github.com/Kitware/CMake) and run it!
+Build the executable with **[CMake](https://github.com/Kitware/CMake)** and run it!
 
   ``$ ./KapProfiler <directory>``
   
