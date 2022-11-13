@@ -24,8 +24,8 @@
 #include "Graphical/imgui_impl_glfw.hpp"
 
 #include "GlobImpl.hpp"
-#include "StackElement.hpp"
-#include "StackSummary.hpp"
+#include "Stack/StackElement.hpp"
+#include "Stack/StackSummary.hpp"
 
 namespace KapEngine {
 
