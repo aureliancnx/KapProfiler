@@ -25,7 +25,7 @@ namespace KapEngine {
             // Checks if the window is initialized
             bool _windowInitialized;
             // Viewer window
-            GLFWwindow *_window;
+            GLFWwindow* _window;
 
             /**
              * Initialize profiler window
@@ -48,7 +48,7 @@ namespace KapEngine {
             /**
              * Error callback with GLFW3
              */
-            static void errorCallback(int, const char *);
+            static void errorCallback(int, const char*);
         };
 
     } // namespace Profiler
