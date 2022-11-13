@@ -71,7 +71,7 @@ void Viewer::run() {
         ImGui::NewFrame();
 
         GlobImpl glob(_filePattern);
-        std::vector<std::string> kprofFiles = glob.retrieveGlobResults();
+        std::vector<std::string> kprofFiles = glob.retrieveGlobResult();
         for (std::string& kprofFileName : kprofFiles) {
             std::ifstream file(kprofFileName);
 
