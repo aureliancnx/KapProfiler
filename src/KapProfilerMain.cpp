@@ -5,6 +5,7 @@
 
 int main(int ac, char** av) {
     if (!av || ac != 2) {
+        std::cerr << "Usage: ./KapProfiler <path_of_kprof_files>" << std::endl;
         return 1;
     }
 
