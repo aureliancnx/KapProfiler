@@ -24,7 +24,7 @@ namespace KapEngine {
              */
             void initializeWindow();
           public:
-            Viewer(std::string &filePattern);
+            Viewer(std::string& filePattern);
             ~Viewer();
 
             /**

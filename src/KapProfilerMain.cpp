@@ -37,9 +37,7 @@ std::vector<std::string> split(std::string s, std::string delimiter) {
     return res;
 }
 
-void initializeFolder() {
-
-}
+void initializeFolder() {}
 
 int main(int ac, char** av) {
     if (!av || ac != 2) {
@@ -49,7 +47,7 @@ int main(int ac, char** av) {
     if (!glfwInit()) {
         return 1;
     }
-    GLFWwindow *window = glfwCreateWindow(1280, 720, "KapProfiler", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(1280, 720, "KapProfiler", NULL, NULL);
     if (window == NULL) {
         return 1;
     }
