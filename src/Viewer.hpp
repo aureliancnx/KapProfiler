@@ -1,5 +1,5 @@
-#ifndef PROFILER_GLOBIMPL_HPP
-#define PROFILER_GLOBIMPL_HPP
+#ifndef PROFILER_VIEWER_HPP
+#define PROFILER_VIEWER_HPP
 
 #include <glob.h>
 #include <stdio.h>
@@ -82,4 +82,4 @@ namespace KapEngine {
     } // namespace Profiler
 } // namespace KapEngine
 
-#endif // PROFILER_GLOBIMPL_HPP
+#endif // PROFILER_VIEWER_HPP
