@@ -37,6 +37,7 @@ namespace KapEngine {
              * Initialize ImGui
              */
             void initializeImGui();
+
           public:
             Viewer(std::string& filePattern);
             ~Viewer();
