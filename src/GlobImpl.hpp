@@ -2,10 +2,11 @@
 #define PROFILER_GLOBIMPL_HPP
 
 #include <glob.h>
-#include <stdio.h>
+#include <cstdio>
 #include <vector>
 #include <string>
 #include <sstream>
+#include <cstring>
 
 namespace KapEngine {
 
