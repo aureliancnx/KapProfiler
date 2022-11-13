@@ -38,7 +38,7 @@ void Viewer::initializeImGui() {
     ImGui::StyleColorsDark();
 
     // Initialize implementation
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplGlfw_InitForOpenGL(_window, true);
     ImGui_ImplOpenGL2_Init();
 }
 

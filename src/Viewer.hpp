@@ -7,7 +7,11 @@
 #include <string>
 #include <sstream>
 
+// Graphical includes
 #include <GLFW/glfw3.h>
+#include <imgui.h>
+#include "Graphical/imgui_impl_opengl2.hpp"
+#include "Graphical/imgui_impl_glfw.hpp"
 
 namespace KapEngine {
 
