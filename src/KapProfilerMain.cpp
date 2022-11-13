@@ -37,16 +37,22 @@ std::vector<std::string> split(std::string s, std::string delimiter) {
     return res;
 }
 
+void initializeFolder() {
+
+}
+
 int main(int ac, char** av) {
     if (!av || ac != 2) {
         return 1;
     }
     glfwSetErrorCallback(glfw_error_callback);
-    if (!glfwInit())
+    if (!glfwInit()) {
         return 1;
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "KapProfiler", NULL, NULL);
-    if (window == NULL)
+    }
+    GLFWwindow *window = glfwCreateWindow(1280, 720, "KapProfiler", NULL, NULL);
+    if (window == NULL) {
         return 1;
+    }
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
 
