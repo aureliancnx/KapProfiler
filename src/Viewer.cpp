@@ -6,30 +6,38 @@ Viewer::Viewer(std::string &filePattern) {
     _filePattern = filePattern;
 }
 
-void Viewer::initializeWindow() {
+bool Viewer::initializeWindow() {
     // Window is already initialized
     if (_windowInitialized) {
-        return;
+        return false;
     }
     _windowInitialized = true;
-    glfwSetErrorCallback(glfw_error_callback);
+    // Set GLFW error callback
+    glfwSetErrorCallback(errorCallback);
+
     if (!glfwInit()) {
-        return 1;
+        return false;
     }
-    GLFWwindow *window = glfwCreateWindow(1280, 720, "KapProfiler", NULL, NULL);
-    if (window == NULL) {
-        return 1;
+    // Create GLFW window
+    _window = glfwCreateWindow(1280, 720, "KapProfiler", NULL, NULL);
+    if (_window == NULL) {
+        return false;
     }
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(_window);
     glfwSwapInterval(1);
+}
 
+void Viewer::initializeImGui() {
+    // Check ImGui version
     IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO();
-    (void)io;
 
+    // Create ImGui context
+    ImGui::CreateContext();
+    ImGuiIO &io = ImGui::GetIO();
+    (void) io;
     ImGui::StyleColorsDark();
 
+    // Initialize implementation
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL2_Init();
 }
