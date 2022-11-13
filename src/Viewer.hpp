@@ -27,6 +27,11 @@ namespace KapEngine {
              * Initialize profiler window
              */
             bool initializeWindow();
+
+            /**
+             * Initialize ImGui
+             */
+            void initializeImGui();
           public:
             Viewer(std::string& filePattern);
             ~Viewer();
