@@ -6,3 +6,6 @@ cmake-build-debug/
 
 # ImGUI 
 imgui.ini
+
+# Build folder
+build/
