@@ -38,6 +38,9 @@ std::vector<std::string> split(std::string s, std::string delimiter) {
 }
 
 int main(int ac, char **av) {
+    if (!av || ac != 2) {
+        return 1;
+    }
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit())
         return 1;
