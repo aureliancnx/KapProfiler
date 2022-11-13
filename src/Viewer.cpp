@@ -103,7 +103,6 @@ void Viewer::run() {
                 std::cout << "error '" << lines[1] << "'" << std::endl;
                 continue;
             }
-            std::cout << stackSummaryCount << std::endl;
 
             if (stackSummaryCount < 0) {
                 break;
