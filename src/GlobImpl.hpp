@@ -17,7 +17,7 @@ namespace KapEngine {
             std::string _pattern;
 
           public:
-            GlobImpl(std::string &);
+            GlobImpl(std::string&);
             ~GlobImpl();
 
             std::vector<std::string> retrieveGlobResult();

@@ -37,7 +37,7 @@ std::vector<std::string> split(std::string s, std::string delimiter) {
     return res;
 }
 
-int main(int ac, char **av) {
+int main(int ac, char** av) {
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit())
         return 1;
