@@ -14,12 +14,18 @@
 #define GL_SILENCE_DEPRECATION
 #endif
 
+#if defined(_MSC_VER) && (_MSC_VER >= 1900) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS)
+#pragma comment(lib, "legacy_stdio_definitions")
+#endif
+
 #include <GLFW/glfw3.h>
 #include <imgui.h>
 #include "Graphical/imgui_impl_opengl2.hpp"
 #include "Graphical/imgui_impl_glfw.hpp"
 
 #include "GlobImpl.hpp"
+#include "StackElement.hpp"
+#include "StackSummary.hpp"
 
 namespace KapEngine {
 
@@ -34,6 +40,7 @@ namespace KapEngine {
             bool _windowInitialized;
             // Viewer window
             GLFWwindow* _window;
+            ImVec4 _clearColor = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
             /**
              * Initialize profiler window
@@ -49,6 +56,13 @@ namespace KapEngine {
              * Destroy everything
              */
             void destroy();
+
+            /**
+             * Draw
+             */
+            void draw();
+
+            std::vector<std::string> split(std::string, std::string);
 
           public:
             Viewer(std::string& filePattern);

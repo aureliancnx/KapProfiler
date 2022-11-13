@@ -1,4 +1,5 @@
 #include "Viewer.hpp"
+#include "GlobImpl.hpp"
 
 using namespace KapEngine::Profiler;
 
@@ -69,7 +70,7 @@ void Viewer::run() {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        KapEngine::Profiler::GlobImpl glob(_filePattern);
+        GlobImpl glob(_filePattern);
         std::vector<std::string> kprofFiles = glob.retrieveGlobResults();
         for (std::string& kprofFileName : kprofFiles) {
             std::ifstream file(kprofFileName);
@@ -151,7 +152,7 @@ void Viewer::run() {
                 ImGui::TableHeadersRow();
 
                 for (auto& summary : summaries) {
-                    KapEngine::Profiler::StackElement elem(summary.getRaw());
+                    StackElement elem(summary.getRaw());
                     ImGui::TableNextRow();
                     ImGui::TableSetColumnIndex(0);
                     ImGui::Text("%s", elem.getClass().c_str());
@@ -173,16 +174,34 @@ void Viewer::run() {
 
             ImGui::End();
         }
-
-        ImGui::Render();
-        int display_w, display_h;
-        glfwGetFramebufferSize(window, &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
-        glClearColor(clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
-        glfwMakeContextCurrent(window);
-        glfwSwapBuffers(window);
+        draw();
     }
+}
+
+void Viewer::draw() {
+    ImGui::Render();
+    int display_w, display_h;
+    glfwGetFramebufferSize(_window, &display_w, &display_h);
+    glViewport(0, 0, display_w, display_h);
+    glClearColor(_clearColor.x * _clearColor.w, _clearColor.y * _clearColor.w, _clearColor.z * _clearColor.w, _clearColor.w);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+    glfwMakeContextCurrent(_window);
+    glfwSwapBuffers(_window);
+}
+
+std::vector<std::string> Viewer::split(std::string s, std::string delimiter) {
+    size_t pos_start = 0, pos_end, delim_len = delimiter.length();
+    std::string token;
+    std::vector<std::string> res;
+
+    while ((pos_end = s.find(delimiter, pos_start)) != std::string::npos) {
+        token = s.substr(pos_start, pos_end - pos_start);
+        pos_start = pos_end + delim_len;
+        res.push_back(token);
+    }
+
+    res.push_back(s.substr(pos_start));
+    return res;
 }
