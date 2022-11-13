@@ -7,6 +7,8 @@
 #include <string>
 #include <sstream>
 
+#include <GLFW/glfw3.h>
+
 namespace KapEngine {
 
     namespace Profiler {
@@ -18,11 +20,13 @@ namespace KapEngine {
             std::string _filePattern;
             // Checks if the window is initialized
             bool _windowInitialized;
+            // Viewer window
+            GLFWwindow *_window;
 
             /**
              * Initialize profiler window
              */
-            void initializeWindow();
+            bool initializeWindow();
           public:
             Viewer(std::string& filePattern);
             ~Viewer();
@@ -35,7 +39,7 @@ namespace KapEngine {
             /**
              * Error callback with GLFW3
              */
-            void errorCallback(int, const char *);
+            static void errorCallback(int, const char *);
         };
 
     } // namespace Profiler
