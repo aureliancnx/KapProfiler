@@ -5,9 +5,8 @@
 #include <iostream>
 #include <string>
 
-#ifdef __APPLE__
-#define GL_SILENCE_DEPRECATION
-#endif
+#include "Viewer.hpp"
+
 #include <GLFW/glfw3.h>
 
 #include "imgui.h"
@@ -41,26 +40,9 @@ int main(int ac, char** av) {
     if (!av || ac != 2) {
         return 1;
     }
-    glfwSetErrorCallback(glfw_error_callback);
-    if (!glfwInit()) {
-        return 1;
-    }
-    GLFWwindow* window = glfwCreateWindow(1280, 720, "KapProfiler", NULL, NULL);
-    if (window == NULL) {
-        return 1;
-    }
-    glfwMakeContextCurrent(window);
-    glfwSwapInterval(1);
 
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO();
-    (void)io;
-
-    ImGui::StyleColorsDark();
-
-    ImGui_ImplGlfw_InitForOpenGL(window, true);
-    ImGui_ImplOpenGL2_Init();
+    std::string pattern = av[1];
+    Viewer viewer(pattern);
 
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
