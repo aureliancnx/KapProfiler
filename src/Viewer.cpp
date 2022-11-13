@@ -2,9 +2,7 @@
 
 using namespace KapEngine::Profiler;
 
-Viewer::Viewer(std::string &filePattern) {
-    _filePattern = filePattern;
-}
+Viewer::Viewer(std::string& filePattern) { _filePattern = filePattern; }
 
 bool Viewer::initializeWindow() {
     // Window is already initialized
@@ -33,8 +31,8 @@ void Viewer::initializeImGui() {
 
     // Create ImGui context
     ImGui::CreateContext();
-    ImGuiIO &io = ImGui::GetIO();
-    (void) io;
+    ImGuiIO& io = ImGui::GetIO();
+    (void)io;
     ImGui::StyleColorsDark();
 
     // Initialize implementation
@@ -42,11 +40,6 @@ void Viewer::initializeImGui() {
     ImGui_ImplOpenGL2_Init();
 }
 
-void Viewer::errorCallback(int error, const char *content) {
-    fprintf(stderr, "Error with GLFW - ID %d: %s\n", error, content);
-}
+void Viewer::errorCallback(int error, const char* content) { fprintf(stderr, "Error with GLFW - ID %d: %s\n", error, content); }
 
-
-void Viewer::run() {
-
-}
+void Viewer::run() {}
