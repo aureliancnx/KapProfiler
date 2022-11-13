@@ -47,7 +47,6 @@ int main(int ac, char** av) {
     viewer.run();
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
 
