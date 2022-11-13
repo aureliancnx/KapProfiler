@@ -172,9 +172,7 @@ bool ImGui_ImplOpenGL2_CreateFontsTexture() {
     ImGui_ImplOpenGL2_Data* bd = ImGui_ImplOpenGL2_GetBackendData();
     unsigned char* pixels;
     int width, height;
-    io.Fonts->GetTexDataAsRGBA32(
-        &pixels, &width,
-        &height);
+    io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
 
     GLint last_texture;
     glGetIntegerv(GL_TEXTURE_BINDING_2D, &last_texture);
