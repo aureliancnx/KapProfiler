@@ -24,22 +24,26 @@ static void glfw_error_callback(int error, const char* description) { fprintf(st
 
 std::vector<std::string> glob(const std::string& pattern) {
     using namespace std;
-
-    glob_t glob_result;
-    memset(&glob_result, 0, sizeof(glob_result));
     vector<string> filenames;
 
-    int return_value = glob(pattern.c_str(), GLOB_TILDE, NULL, &glob_result);
-    if (return_value != 0) {
+    try {
+        glob_t glob_result;
+        memset(&glob_result, 0, sizeof(glob_result));
+
+        int return_value = glob(pattern.c_str(), GLOB_TILDE, NULL, &glob_result);
+        if (return_value != 0) {
+            globfree(&glob_result);
+            return filenames;
+        }
+
+        for (size_t i = 0; i < glob_result.gl_pathc; ++i) {
+            filenames.push_back(string(glob_result.gl_pathv[i]));
+        }
+
         globfree(&glob_result);
+    }catch(...) {
         return filenames;
     }
-
-    for (size_t i = 0; i < glob_result.gl_pathc; ++i) {
-        filenames.push_back(string(glob_result.gl_pathv[i]));
-    }
-
-    globfree(&glob_result);
     return filenames;
 }
 
@@ -87,7 +91,7 @@ int main(int ac, char** av) {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        std::vector<std::string> kprofFiles = glob("../../*.kprof");
+        std::vector<std::string> kprofFiles = glob(std::string(av[1]) + "/*.kprof");
         for (std::string& kprofFileName : kprofFiles) {
             std::ifstream file(kprofFileName);
 
@@ -115,6 +119,7 @@ int main(int ac, char** av) {
                 std::cout << "error '" << lines[1] << "'" << std::endl;
                 continue;
             }
+            std::cout << stackSummaryCount << std::endl;
 
             if (stackSummaryCount < 0) {
                 break;
