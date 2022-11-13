@@ -5,6 +5,10 @@ using namespace KapEngine::Profiler;
 
 Viewer::Viewer(std::string& filePattern) { _filePattern = filePattern; }
 
+Viewer::~Viewer() {
+
+}
+
 bool Viewer::initializeWindow() {
     // Window is already initialized
     if (_windowInitialized) {
