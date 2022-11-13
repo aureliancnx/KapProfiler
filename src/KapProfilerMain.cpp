@@ -41,12 +41,12 @@ int main(int ac, char** av) {
         return 1;
     }
 
-    std::string pattern = av[1];
-    Viewer viewer(pattern);
+    std::string pattern = std::string(av[1]) + "/*.kprof";
+    KapEngine::Profiler::Viewer viewer(pattern);
 
+    viewer.run();
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
-    std::string pattern = std::string(av[1]) + "/*.kprof";
 
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();

@@ -19,6 +19,8 @@
 #include "Graphical/imgui_impl_opengl2.hpp"
 #include "Graphical/imgui_impl_glfw.hpp"
 
+#include "GlobImpl.hpp"
+
 namespace KapEngine {
 
     namespace Profiler {
@@ -42,6 +44,11 @@ namespace KapEngine {
              * Initialize ImGui
              */
             void initializeImGui();
+
+            /**
+             * Destroy everything
+             */
+            void destroy();
 
           public:
             Viewer(std::string& filePattern);
