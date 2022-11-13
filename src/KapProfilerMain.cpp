@@ -11,8 +11,8 @@
 #include <GLFW/glfw3.h>
 
 #include "imgui.h"
-#include "imgui_impl_glfw.hpp"
-#include "imgui_impl_opengl2.hpp"
+#include "Graphical/imgui_impl_glfw.hpp"
+#include "Graphical/imgui_impl_opengl2.hpp"
 #include "StackSummary.hpp"
 #include "StackElement.hpp"
 
@@ -21,31 +21,6 @@
 #endif
 
 static void glfw_error_callback(int error, const char* description) { fprintf(stderr, "Glfw Error %d: %s\n", error, description); }
-
-std::vector<std::string> glob(const std::string& pattern) {
-    using namespace std;
-    vector<string> filenames;
-
-    try {
-        glob_t glob_result;
-        memset(&glob_result, 0, sizeof(glob_result));
-
-        int return_value = glob(pattern.c_str(), GLOB_TILDE, NULL, &glob_result);
-        if (return_value != 0) {
-            globfree(&glob_result);
-            return filenames;
-        }
-
-        for (size_t i = 0; i < glob_result.gl_pathc; ++i) {
-            filenames.push_back(string(glob_result.gl_pathv[i]));
-        }
-
-        globfree(&glob_result);
-    }catch(...) {
-        return filenames;
-    }
-    return filenames;
-}
 
 std::vector<std::string> split(std::string s, std::string delimiter) {
     size_t pos_start = 0, pos_end, delim_len = delimiter.length();
@@ -62,7 +37,7 @@ std::vector<std::string> split(std::string s, std::string delimiter) {
     return res;
 }
 
-int main(int ac, char** av) {
+int main(int ac, char **av) {
     glfwSetErrorCallback(glfw_error_callback);
     if (!glfwInit())
         return 1;
@@ -84,6 +59,8 @@ int main(int ac, char** av) {
 
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+    std::string pattern = std::string(av[1]) + "/*.kprof";
+
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
 
@@ -91,7 +68,8 @@ int main(int ac, char** av) {
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        std::vector<std::string> kprofFiles = glob(std::string(av[1]) + "/*.kprof");
+        GlobImpl glob(pattern);
+        std::vector<std::string> kprofFiles = glob.retrieveGlobResults();
         for (std::string& kprofFileName : kprofFiles) {
             std::ifstream file(kprofFileName);
 
