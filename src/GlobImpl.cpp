@@ -4,7 +4,7 @@ using namespace KapEngine::Profiler;
 
 GlobImpl::GlobImpl(std::string& pattern) { _pattern = pattern; }
 
-std::vector<std::string> GlobImpl::retrieveGlobResults() {
+std::vector<std::string> GlobImpl::retrieveGlobResult() {
     std::vector<std::string> filenames;
 
     try {
