@@ -14,14 +14,28 @@ namespace KapEngine {
         class Viewer {
 
           private:
+            // Add file pattern
             std::string _filePattern;
+            // Checks if the window is initialized
+            bool _windowInitialized;
 
+            /**
+             * Initialize profiler window
+             */
+            void initializeWindow();
           public:
             Viewer(std::string &filePattern);
             ~Viewer();
 
-            void initializeWindow();
+            /**
+             * You need to call run() in order to enable the profiler viewer
+             */
             void run();
+
+            /**
+             * Error callback with GLFW3
+             */
+            void errorCallback(int, const char *);
         };
 
     } // namespace Profiler
