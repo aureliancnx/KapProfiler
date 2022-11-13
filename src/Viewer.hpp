@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <iostream>
 
 // Graphical includes
 #include <GLFW/glfw3.h>

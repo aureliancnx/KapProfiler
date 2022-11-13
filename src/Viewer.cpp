@@ -23,6 +23,7 @@ bool Viewer::initializeWindow() {
     }
     glfwMakeContextCurrent(_window);
     glfwSwapInterval(1);
+    return true;
 }
 
 void Viewer::initializeImGui() {
@@ -42,4 +43,10 @@ void Viewer::initializeImGui() {
 
 void Viewer::errorCallback(int error, const char* content) { fprintf(stderr, "Error with GLFW - ID %d: %s\n", error, content); }
 
-void Viewer::run() {}
+void Viewer::run() {
+    if (!initializeWindow()) {
+        std::cerr << "Something went wrong while initializing window." << std::endl;
+        return;
+    }
+    initializeImGui();
+}
