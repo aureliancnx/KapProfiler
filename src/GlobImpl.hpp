@@ -20,7 +20,7 @@ namespace KapEngine {
             GlobImpl(std::string &);
             ~GlobImpl();
 
-            std::vector<std::string> &retrieveGlobResult();
+            std::vector<std::string> retrieveGlobResult();
         };
 
     } // namespace Profiler
